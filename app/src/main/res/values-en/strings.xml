@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">WeatherNow</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="or">────────────── OR ──────────────</string>
+    <string name="continue_google">Continue with Google</string>
+    <string name="language">🌐 English</string>
+    <string name="slogan">Get weather info fast &amp; accurately</string>
+    <!-- Splash -->
+    <string name="slogansplash">Welcome to WeatherNow!</string>
+    <!-- Login -->
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="remember_login">Remember login</string>
+    <string name="back">Back</string>
+    <string name="login_error_empty_fields">Please enter your username and password</string>
+    <string name="login_success">Log in successfully</string>
+    <string name="login_error_invalid">Log in failed</string>
+    <!-- Register-->
+    <string name="confirm_password">Confirm Password</string>
+    <string name="email">Email</string>
+    <string name="error_fill_all">Please fill in all fields</string>
+    <string name="error_invalid_email">Invalid email address</string>
+    <string name="error_password_length">Password must be at least 3 characters</string>
+    <string name="error_password_confirm">Password confirmation does not match</string>
+    <string name="success_register">Registration successful!</string>
+    <string name="error_register">Registration failed!</string>
+
+
+</resources>

@@ -10,14 +10,14 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/logo"
-        android:contentDescription="logo" />
+        android:contentDescription="@string/app_name" />
 
     <TextView
         android:id="@+id/txtAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="WeatherNow"
+        android:text="@string/app_name"
         android:textColor="@android:color/white"
         android:textSize="28sp"
         android:textStyle="bold" />
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Chào mừng đến với WeatherNow !"
+        android:text="@string/slogansplash"
         android:textColor="@android:color/white"
         android:textSize="16sp" />
 </LinearLayout>

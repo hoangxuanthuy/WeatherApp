@@ -1,3 +1,33 @@
 <resources>
-    <string name="app_name">WeatherApp</string>
+    <string name="app_name">WeatherNow</string>
+    <string name="register">Đăng ký</string>
+    <string name="login">Đăng nhập</string>
+    <string name="or">────────────── HOẶC ──────────────</string>
+    <string name="continue_google">Tiếp tục với Google</string>
+    <string name="language">🌐 Tiếng Việt</string>
+    <string name="slogan">Cung cấp cho bạn thông tin thời tiết\nnhanh chóng và chính xác nhất</string>
+    <!-- Splash -->
+    <string name="slogansplash">Chào mừng đến với WeatherNow !</string>
+    <!-- Login -->
+    <string name="username">Tên đăng nhập</string>
+    <string name="password">Mật khẩu</string>
+    <string name="remember_login">Nhớ đăng nhập</string>
+    <string name="back">Quay lại</string>
+    <string name="login_error_empty_fields">Vui lòng nhập tên đăng nhập và mật khẩu</string>
+    <string name="login_success">Đăng nhập thành công</string>
+    <string name="login_error_invalid">Đăng nhập thất bại</string>
+    <!-- Register-->
+    <string name="confirm_password">Xác nhận mật khẩu</string>
+    <string name="email">Email</string>
+    <string name="error_fill_all">Vui lòng điền đầy đủ thông tin</string>
+    <string name="error_invalid_email">Email không hợp lệ</string>
+    <string name="error_password_length">Mật khẩu phải từ 3 ký tự</string>
+    <string name="error_password_confirm">Mật khẩu xác nhận không khớp</string>
+    <string name="success_register">Đăng ký thành công!</string>
+    <string name="error_register">Đăng ký thất bại!</string>
+
+    <string name="default_web_client_id">891189051887-uiflikcec4h07sac7s0tp240i648cm0n.apps.googleusercontent.com</string>
+
+
+
 </resources>
