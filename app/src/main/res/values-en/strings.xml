@@ -26,5 +26,41 @@
     <string name="success_register">Registration successful!</string>
     <string name="error_register">Registration failed!</string>
 
+    <string name="default_web_client_id">891189051887-uiflikcec4h07sac7s0tp240i648cm0n.apps.googleusercontent.com</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_analysis">Analysis</string>
+    <string name="nav_settings">Settings</string>
+
+    <string name="avatar">User Avatar</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="setting">Settings</string>
+    <string name="logout">Log out</string>
+
+    <!-- Settings strings -->
+    <string name="no_username">(No username)</string>
+    <string name="hello_user_name">Hello %1$s!</string>
+    <string name="username_label">Username: %1$s</string>
+    <string name="email_label">Email: %1$s</string>
+    <string name="reset_password_sent">Password reset email sent!</string>
+    <string name="setting_feature_coming">This feature is under development</string>
+    <string name="logout_success">Logged out successfully</string>
+
+    <string name="city">City</string>
+    <string name="current_temp">Current Temperature</string>
+    <string name="weather_condition">Weather Condition</string>
+    <string name="afternoon_forecast">Afternoon %1$d° · Evening %2$d°</string>
+    <string name="hourly_forecast">Hourly Forecast</string>
+
+    <string name="moderate">Moderate</string>
+    <string name="feels_like">Feels like</string>
+    <string name="title_wind">Wind speed</string>
+    <string name="title_pollutants">Pollutant index</string>
+    <string name="title_rain">Rainfall</string>
+    <string name="title_sunrise">Sunrise</string>
+    <string name="title_sunset">Sunset</string>
+    <string name="title_visibility">Visibility</string>
+    <string name="title_humidity">Humidity</string>
+    <string name="title_pressure">Pressure</string>
 
 </resources>
