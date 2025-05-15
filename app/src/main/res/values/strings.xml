@@ -28,6 +28,22 @@
 
     <string name="default_web_client_id">891189051887-uiflikcec4h07sac7s0tp240i648cm0n.apps.googleusercontent.com</string>
 
+    <string name="nav_home">Trang chủ</string>
+    <string name="nav_analysis">Phân tích</string>
+    <string name="nav_settings">Cài đặt</string>
+
+    <string name="avatar">Ảnh đại diện</string>
+    <string name="reset_password">Đặt lại mật khẩu</string>
+    <string name="setting">Cài đặt</string>
+    <string name="logout">Đăng xuất</string>
+
+    <string name="no_username">(Không có tên)</string>
+    <string name="hello_user_name">Xin chào %1$s!</string>
+    <string name="username_label">Tên người dùng: %1$s</string>
+    <string name="email_label">Email: %1$s</string>
+    <string name="reset_password_sent">Đã gửi email đặt lại mật khẩu!</string>
+    <string name="setting_feature_coming">Chức năng đang được phát triển</string>
+    <string name="logout_success">Đã đăng xuất</string>
 
 
 </resources>

@@ -36,7 +36,9 @@
             android:hint="@string/username"
             android:drawableStart="@drawable/ic_account"
             android:drawablePadding="8dp"
-            android:padding="12dp" />
+            android:padding="12dp"
+            android:autofillHints="none"
+            android:importantForAutofill="no" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Email -->
@@ -58,7 +60,9 @@
             android:inputType="textEmailAddress"
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="8dp"
-            android:padding="12dp" />
+            android:padding="12dp"
+            android:autofillHints="none"
+            android:importantForAutofill="no" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Password -->
@@ -84,7 +88,9 @@
                 android:inputType="textPassword"
                 android:drawableStart="@drawable/ic_password"
                 android:drawablePadding="8dp"
-                android:padding="12dp" />
+                android:padding="12dp"
+                android:autofillHints="none"
+                android:importantForAutofill="no" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
@@ -121,7 +127,9 @@
                 android:inputType="textPassword"
                 android:drawableStart="@drawable/ic_password"
                 android:drawablePadding="8dp"
-                android:padding="12dp" />
+                android:padding="12dp"
+                android:autofillHints="none"
+                android:importantForAutofill="no" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
@@ -163,7 +171,7 @@
             android:background="@drawable/rounded_white_button" />
     </LinearLayout>
 
-    <!-- Illustration -->
+    <!-- Illustration (optional) -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -2,6 +2,7 @@ package com.example.weatherapp.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -55,12 +56,15 @@ public class MainActivity extends BaseActivity {
 
         btnGoogle.setOnClickListener(v -> {
             if (isNetworkConnected()) {
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_SIGN_IN);
+                mGoogleSignInClient.signOut().addOnCompleteListener(task -> {
+                    Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                    startActivityForResult(signInIntent, RC_SIGN_IN);
+                });
             } else {
                 Toast.makeText(this, "Không có kết nối mạng", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         tvLanguage.setOnClickListener(v -> {
             String currentLang = LocaleHelper.getSavedLanguage(this);
@@ -105,7 +109,15 @@ public class MainActivity extends BaseActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
-                        startActivity(new Intent(this, HomeActivity.class));
+                        if (user != null) {
+                            String name = user.getDisplayName();
+                            SharedPreferences.Editor editor = getSharedPreferences("loginPrefs", MODE_PRIVATE).edit();
+                            editor.putString("username", name != null ? name : "User");
+                            editor.putString("email", user.getEmail());
+                            editor.putBoolean("isLoggedIn", true);
+                            editor.apply();
+                        }
+                        startActivity(new Intent(this, SettingsActivity.class));
                         finish();
                     } else {
                         Log.e("FIREBASE_AUTH", "signInWithCredential:failure", task.getException());
@@ -113,6 +125,7 @@ public class MainActivity extends BaseActivity {
                     }
                 });
     }
+
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

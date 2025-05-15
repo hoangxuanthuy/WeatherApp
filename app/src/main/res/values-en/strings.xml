@@ -25,6 +25,25 @@
     <string name="error_password_confirm">Password confirmation does not match</string>
     <string name="success_register">Registration successful!</string>
     <string name="error_register">Registration failed!</string>
+    <string name="default_web_client_id">891189051887-uiflikcec4h07sac7s0tp240i648cm0n.apps.googleusercontent.com</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_analysis">Analysis</string>
+    <string name="nav_settings">Settings</string>
+
+    <string name="avatar">User Avatar</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="setting">Settings</string>
+    <string name="logout">Log out</string>
+
+    <!-- Settings strings -->
+    <string name="no_username">(No username)</string>
+    <string name="hello_user_name">Hello %1$s!</string>
+    <string name="username_label">Username: %1$s</string>
+    <string name="email_label">Email: %1$s</string>
+    <string name="reset_password_sent">Password reset email sent!</string>
+    <string name="setting_feature_coming">This feature is under development</string>
+    <string name="logout_success">Logged out successfully</string>
 
 
 </resources>

@@ -1,9 +1,8 @@
 package com.example.weatherapp.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.InputType;
 import android.widget.Button;
@@ -13,89 +12,92 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.weatherapp.R;
-import com.example.weatherapp.data.DBHelper;
-import com.example.weatherapp.util.MD5Util;
-
+import com.example.weatherapp.util.LocaleHelper;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class LoginActivity extends BaseActivity {
 
-    private EditText edtUsername, edtPassword;
+    private EditText edtEmail, edtPassword;
     private CheckBox chkRemember;
     private Button btnLogin, btnBack;
     private ImageView imgTogglePassword;
     private boolean isPasswordVisible = false;
+
+    private FirebaseAuth mAuth;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.setLocale(newBase, LocaleHelper.getSavedLanguage(newBase)));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Ánh xạ view
-        edtUsername = findViewById(R.id.edtUsername);
+        edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
         chkRemember = findViewById(R.id.chkRemember);
         btnLogin = findViewById(R.id.btnLogin);
         btnBack = findViewById(R.id.btnBack);
         imgTogglePassword = findViewById(R.id.imgTogglePassword);
 
-        // Load dữ liệu từ SharedPreferences nếu có
+        mAuth = FirebaseAuth.getInstance();
+
         SharedPreferences pref = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         boolean isRemembered = pref.getBoolean("remember", false);
         if (isRemembered) {
-            edtUsername.setText(pref.getString("username", ""));
+            edtEmail.setText(pref.getString("email", ""));
             edtPassword.setText(pref.getString("password", ""));
             chkRemember.setChecked(true);
         }
 
-        // Reset trạng thái hiển thị mật khẩu về mặc định (ẩn)
         edtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         imgTogglePassword.setImageResource(R.drawable.ic_lock);
-        isPasswordVisible = false;
 
-        // Sự kiện nút Đăng nhập
         btnLogin.setOnClickListener(v -> {
-            String username = edtUsername.getText().toString().trim();
+            String email = edtEmail.getText().toString().trim();
             String password = edtPassword.getText().toString().trim();
 
-            if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, R.string.login_error_empty_fields, Toast.LENGTH_SHORT).show();
+            if (email.isEmpty() || password.isEmpty()) {
+                showToast(R.string.login_error_empty_fields);
                 return;
             }
 
-            DBHelper dbHelper = new DBHelper(this);
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
-            String hashedPassword = MD5Util.hash(password);
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null) {
+                                if (chkRemember.isChecked()) {
+                                    SharedPreferences.Editor editor = pref.edit();
+                                    editor.putString("email", email);
+                                    editor.putString("password", password);
+                                    editor.putBoolean("remember", true);
+                                    editor.putBoolean("isLoggedIn", true);
 
-            Cursor cursor = db.query(DBHelper.TABLE_USERS,
-                    null,
-                    DBHelper.COLUMN_USERNAME + "=? AND " + DBHelper.COLUMN_PASSWORD + "=?",
-                    new String[]{username, hashedPassword},
-                    null, null, null);
+                                    // Nếu username được set trước đó trong Register thì lưu lại
+                                    if (user.getDisplayName() != null) {
+                                        editor.putString("username", user.getDisplayName());
+                                    }
 
-            if (cursor != null && cursor.moveToFirst()) {
-                // Thành công: lưu nếu cần
-                if (chkRemember.isChecked()) {
-                    SharedPreferences.Editor editor = pref.edit();
-                    editor.putString("username", username);
-                    editor.putString("password", password);
-                    editor.putBoolean("remember", true);
-                    editor.apply();
-                } else {
-                    pref.edit().clear().apply();
-                }
+                                    editor.apply();
+                                } else {
+                                    pref.edit().clear().apply();
+                                }
 
-                Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, HomeActivity.class));
-                finish();
-            } else {
-                Toast.makeText(this, getString(R.string.login_error_invalid), Toast.LENGTH_SHORT).show();
-            }
-
-            if (cursor != null) cursor.close();
-            db.close();
+                                showToast(R.string.login_success);
+                                startActivity(new Intent(this, SettingsActivity.class));
+                                finish();
+                            }
+                        } else {
+                            showToast(R.string.login_error_invalid);
+                        }
+                    });
         });
 
-        // Toggle mật khẩu hiển thị
         imgTogglePassword.setOnClickListener(v -> {
             if (isPasswordVisible) {
                 edtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -108,10 +110,13 @@ public class LoginActivity extends BaseActivity {
             isPasswordVisible = !isPasswordVisible;
         });
 
-        // Nút quay lại
         btnBack.setOnClickListener(v -> {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         });
+    }
+
+    private void showToast(int msgResId) {
+        Toast.makeText(this, getString(msgResId), Toast.LENGTH_SHORT).show();
     }
 }

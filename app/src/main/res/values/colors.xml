@@ -6,4 +6,5 @@
     <color name="color_primary_variant">#1565C0</color> <!-- Xanh dương đậm hơn -->
     <color name="color_secondary">#E3F2FD</color> <!-- Xanh nhạt nhẹ nhàng -->
     <color name="color_background">#FFFFFF</color> <!-- Nền trắng -->
+
 </resources>
