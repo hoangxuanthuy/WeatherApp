@@ -1,33 +1,121 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="@drawable/bg_gradient">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imgLogo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/logo"
-        android:contentDescription="@string/app_name" />
+    <!-- Dynamic Background Container -->
+    <FrameLayout
+        android:id="@+id/backgroundContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_main_gradient">
 
-    <TextView
-        android:id="@+id/txtAppName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/app_name"
-        android:textColor="@android:color/white"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        <!-- Lightning Effect Overlay -->
+        <View
+            android:id="@+id/lightningOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:alpha="0"
+            android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/txtWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/slogansplash"
-        android:textColor="@android:color/white"
-        android:textSize="16sp" />
-</LinearLayout>
+        <!-- Rain Animation Container -->
+        <FrameLayout
+            android:id="@+id/rainContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <!-- Snow Animation Container -->
+        <FrameLayout
+            android:id="@+id/snowContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <!-- Floating particles for ambiance -->
+        <FrameLayout
+            android:id="@+id/particleContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+    </FrameLayout>
+
+    <!-- Main Content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp">
+
+        <!-- Logo with glow effect -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp">
+
+            <!-- Glow background -->
+            <View
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:background="@drawable/bg_logo_glow"
+                android:alpha="0.3" />
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:src="@drawable/logo"
+                android:contentDescription="@string/app_name" />
+        </FrameLayout>
+
+        <!-- App Name with shadow -->
+        <TextView
+            android:id="@+id/txtAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/app_name"
+            android:textColor="#FFFFFF"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="4"
+            android:fontFamily="sans-serif-light" />
+
+        <!-- Welcome text with animation -->
+        <TextView
+            android:id="@+id/txtWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/slogansplash"
+            android:textColor="#E3F2FD"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:alpha="0.9" />
+
+        <!-- Loading indicator -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:indeterminateTint="#FFFFFF"
+            style="?android:attr/progressBarStyle" />
+
+        <!-- Version info -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Version 1.0"
+            android:textColor="#B3E5FC"
+            android:textSize="12sp"
+            android:alpha="0.7" />
+    </LinearLayout>
+</FrameLayout>

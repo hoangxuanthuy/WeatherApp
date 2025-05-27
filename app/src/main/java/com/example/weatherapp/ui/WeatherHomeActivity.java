@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,6 +27,7 @@ import com.example.weatherapp.data.model.AirQualityResponse;
 import com.example.weatherapp.data.model.CurrentWeather;
 import com.example.weatherapp.data.model.ForecastResponse;
 import com.example.weatherapp.data.model.GeocodingResponse;
+import com.example.weatherapp.util.WeatherManager;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
@@ -74,16 +76,18 @@ public class WeatherHomeActivity extends BaseActivity {
         setContentView(R.layout.activity_weather_home);
 
         initViews();
+        // 🌦️ Initialize weather-based background
+        initializeWeatherBackground();
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         checkLocationPermissionAndFetch();
 
-        // Gợi ý và xử lý tìm kiếm
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, CITY_SUGGESTIONS);
         searchView.setAdapter(adapter);
         searchView.setOnItemClickListener((parent, view, position, id) -> {
             String city = adapter.getItem(position);
             getCurrentWeather(city);
-            searchView.setText(""); // Reset sau khi chọn
+            searchView.setText("");
         });
 
         searchView.setOnEditorActionListener((v, actionId, event) -> {
@@ -172,6 +176,17 @@ public class WeatherHomeActivity extends BaseActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     CurrentWeather data = response.body();
                     updateWeatherUI(data);
+
+                    // 🌦️ Save weather condition globally
+                    WeatherManager.getInstance(WeatherHomeActivity.this)
+                            .saveWeatherCondition(
+                                    data.getWeather().get(0).getMain(),
+                                    data.getWeather().get(0).getDescription()
+                            );
+
+                    // 🌦️ Update background immediately
+                    updateWeatherBackground();
+
                     getForecastData(data.getCoord().getLat(), data.getCoord().getLon());
                     getAirPollutionData(data.getCoord().getLat(), data.getCoord().getLon());
                     updateMap(data.getCoord().getLat(), data.getCoord().getLon(), city);

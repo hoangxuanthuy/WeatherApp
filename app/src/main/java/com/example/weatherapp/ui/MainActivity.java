@@ -36,20 +36,20 @@ public class MainActivity extends BaseActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        // Google Sign-In Options
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id)) // phải giống với client ID web từ Firebase
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        // View mapping
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
         btnGoogle = findViewById(R.id.btnGoogle);
         tvLanguage = findViewById(R.id.tvLanguage);
+
+        // 🌦️ Initialize weather-based background
+        initializeWeatherBackground();
 
         btnLogin.setOnClickListener(v -> startActivity(new Intent(this, LoginActivity.class)));
         btnRegister.setOnClickListener(v -> startActivity(new Intent(this, RegisterActivity.class)));
@@ -64,7 +64,6 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(this, "Không có kết nối mạng", Toast.LENGTH_SHORT).show();
             }
         });
-
 
         tvLanguage.setOnClickListener(v -> {
             String currentLang = LocaleHelper.getSavedLanguage(this);
@@ -83,19 +82,13 @@ public class MainActivity extends BaseActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                // Google Sign In was successful, authenticate with Firebase
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
-                // Google Sign In failed, handle the error
                 int statusCode = e.getStatusCode();
-
-                // Kiểm tra cả lỗi code 10 và 12501 như là trường hợp người dùng hủy bỏ
                 if (statusCode == com.google.android.gms.common.api.CommonStatusCodes.CANCELED || statusCode == 12501) {
-                    // User canceled the sign-in flow or an unknown error related to cancellation occurred
                     Log.d("GOOGLE_SIGN_IN", "Google sign in canceled or unknown error: " + statusCode);
                     Toast.makeText(this, "Đăng nhập Google đã bị hủy hoặc gặp sự cố", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Handle other potential error codes
                     Log.e("GOOGLE_SIGN_IN", "Đăng nhập Google thất bại: " + statusCode, e);
                     Toast.makeText(this, "Đăng nhập Google thất bại: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
@@ -125,7 +118,6 @@ public class MainActivity extends BaseActivity {
                     }
                 });
     }
-
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

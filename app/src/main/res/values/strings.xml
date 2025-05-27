@@ -62,4 +62,11 @@
     <string name="title_humidity">Độ ẩm</string>
     <string name="title_pressure">Áp suất</string>
 
+    <!-- 🆕 THÊM MỚI - Accessibility cho icons -->
+    <string name="location_icon">Biểu tượng vị trí</string>
+    <string name="weather_icon">Biểu tượng thời tiết</string>
+    <string name="feels_like_icon">Biểu tượng cảm giác nhiệt độ</string>
+    <string name="humidity_icon">Biểu tượng độ ẩm</string>
+    <string name="wind_icon">Biểu tượng gió</string>
+
 </resources>

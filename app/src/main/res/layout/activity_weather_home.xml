@@ -1,92 +1,338 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#E3F2FD">
+    android:layout_height="match_parent">
 
-    <!-- 🔍 Tìm kiếm tỉnh/thành phố -->
-    <AutoCompleteTextView
-        android:id="@+id/searchView"
+    <!-- Dynamic Background Container -->
+    <FrameLayout
+        android:id="@+id/backgroundContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nhập tên tỉnh/thành phố"
-        android:inputType="text"
-        android:padding="12dp"
-        android:textSize="16sp"
-        android:layout_margin="8dp"
-        android:background="@android:color/white" />
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_main_gradient">
 
-    <!-- 📜 Nội dung cuộn -->
-    <ScrollView
+        <!-- Lightning Effect Overlay (Hidden by default) -->
+        <View
+            android:id="@+id/lightningOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:alpha="0"
+            android:visibility="gone" />
+
+        <!-- 🆕 THÊM MỚI - Cloud Animation Container -->
+        <FrameLayout
+            android:id="@+id/cloudContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <!-- Clouds will be added programmatically -->
+        </FrameLayout>
+
+        <!-- Rain Animation Container -->
+        <FrameLayout
+            android:id="@+id/rainContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <!-- Rain drops will be added programmatically -->
+        </FrameLayout>
+
+        <!-- Snow Animation Container -->
+        <FrameLayout
+            android:id="@+id/snowContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <!-- Snow flakes will be added programmatically -->
+        </FrameLayout>
+    </FrameLayout>
+
+    <!-- Main Content -->
+    <LinearLayout
+        android:id="@+id/rootLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!-- 🔍 Enhanced Search Bar -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:padding="16dp">
+            android:layout_margin="16dp"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFFFFF">
 
-            <!-- Header -->
-            <include
-                layout="@layout/card_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!-- Air Quality -->
-            <include
-                layout="@layout/card_air_quality"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="4dp">
 
-            <!-- 5-hour Forecast -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvHourly"
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_search"
+                    app:tint="#999999"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="Biểu tượng tìm kiếm" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/searchView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:hint="Nhập tên tỉnh/thành phố"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textSize="16sp"
+                    android:background="@android:color/transparent"
+                    android:textColor="#1A1A1A"
+                    android:textColorHint="#999999" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_location"
+                    app:tint="#2196F3"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="Biểu tượng vị trí hiện tại" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 📜 Enhanced Scroll Content -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:clipToPadding="false"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:scrollbars="none" />
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:padding="16dp"
+                android:paddingBottom="100dp">
 
-            <!-- Cards Block (Cảm giác, Gió, Ẩm độ...) -->
-            <include
-                layout="@layout/cards_block"
+                <!-- Header -->
+                <include
+                    layout="@layout/card_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!-- Air Quality -->
+                <include
+                    layout="@layout/card_air_quality"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" />
+
+                <!-- 5-hour Forecast with title -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp">
+
+                    <!-- Section Title -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="12dp"
+                            android:paddingHorizontal="4dp"
+                            android:background="#80FFFFFF"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_clock"
+                                app:tint="#FFFFFF"
+                                android:layout_marginEnd="8dp"
+                                android:contentDescription="Biểu tượng dự báo theo giờ" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text="@string/hourly_forecast"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:shadowColor="#000000"
+                                android:shadowDx="1"
+                                android:shadowDy="1"
+                                android:shadowRadius="2" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Hourly RecyclerView -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvHourly"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:scrollbars="none" />
+                </LinearLayout>
+
+                <!-- Weather Details Section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp">
+
+                    <!-- Section Title -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="12dp"
+                            android:paddingHorizontal="4dp"
+                            android:background="#80FFFFFF"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_details"
+                                app:tint="#FFFFFF"
+                                android:layout_marginEnd="8dp"
+                                android:contentDescription="Biểu tượng chi tiết thời tiết" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text="Chi tiết thời tiết"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:shadowColor="#000000"
+                                android:shadowDx="1"
+                                android:shadowDy="1"
+                                android:shadowRadius="2" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Cards Block -->
+                    <include
+                        layout="@layout/cards_block"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!-- Pollutants -->
+                <include
+                    layout="@layout/card_pollutants"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp" />
+
+                <!-- 🗺️ Enhanced Map Section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp">
+
+                    <!-- Section Title -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="12dp"
+                            android:paddingHorizontal="4dp"
+                            android:background="#80FFFFFF"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_map"
+                                app:tint="#FFFFFF"
+                                android:layout_marginEnd="8dp"
+                                android:contentDescription="Biểu tượng bản đồ" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text="Bản đồ thời tiết"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:shadowColor="#000000"
+                                android:shadowDx="1"
+                                android:shadowDy="1"
+                                android:shadowRadius="2" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Map Container -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="6dp"
+                        app:cardBackgroundColor="#FFFFFF">
+
+                        <org.osmdroid.views.MapView
+                            android:id="@+id/osmMap"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- 🔽 Enhanced Bottom Navigation -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp" />
-
-            <!-- Pollutants -->
-            <include
-                layout="@layout/card_pollutants"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp" />
-
-            <!-- 🗺️ Bản đồ -->
-            <org.osmdroid.views.MapView
-                android:id="@+id/osmMap"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="16dp" />
-        </LinearLayout>
-    </ScrollView>
-
-    <!-- 🔽 Thanh điều hướng -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        app:itemIconTint="@color/selector_bottom_nav"
-        app:itemTextColor="@color/selector_bottom_nav"
-        app:menu="@menu/bottom_nav_menu" />
-</LinearLayout>
+                android:background="@android:color/transparent"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                app:itemIconTint="@color/selector_bottom_nav"
+                app:itemTextColor="@color/selector_bottom_nav"
+                app:menu="@menu/bottom_nav_menu" />
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</FrameLayout>

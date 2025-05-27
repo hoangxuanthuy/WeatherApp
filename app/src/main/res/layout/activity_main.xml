@@ -1,116 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center_horizontal"
-    android:background="#E3F2FD">
+    android:layout_height="match_parent">
 
-    <!-- Ngôn ngữ -->
-    <TextView
-        android:id="@+id/tvLanguage"
+    <!-- Dynamic Background Container -->
+    <FrameLayout
+        android:id="@+id/backgroundContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:text="@string/language"
-        android:textColor="#7B61FF"
-        android:textSize="14sp"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_main_gradient">
 
-    <!-- Logo giữa màn -->
-    <ImageView
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:src="@drawable/logo"
-        android:layout_gravity="center"
-        android:layout_marginBottom="16dp" />
+        <!-- Lightning Effect Overlay -->
+        <View
+            android:id="@+id/lightningOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:alpha="0"
+            android:visibility="gone" />
 
-    <!-- Tiêu đề -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#333333"
-        android:layout_marginBottom="4dp" />
+        <!-- Cloud Animation Container -->
+        <FrameLayout
+            android:id="@+id/cloudContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
-    <!-- Mô tả -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/slogan"
-        android:textAlignment="center"
-        android:textColor="#666666"
-        android:textSize="14sp"
-        android:layout_marginBottom="32dp" />
+        <!-- Rain Animation Container -->
+        <FrameLayout
+            android:id="@+id/rainContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
-    <!-- Nút đăng ký / đăng nhập -->
+        <!-- Snow Animation Container -->
+        <FrameLayout
+            android:id="@+id/snowContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <!-- Floating particles for ambiance -->
+        <FrameLayout
+            android:id="@+id/particleContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+    </FrameLayout>
+
+    <!-- Main Content -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginBottom="16dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
 
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="@string/register"
-            android:textColor="#7B61FF"
-            android:layout_marginEnd="8dp"
-            android:backgroundTint="#FFFFFF"
-            android:background="@drawable/rounded_white_button" />
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="@string/login"
+        <!-- Ngôn ngữ -->
+        <TextView
+            android:id="@+id/tvLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@string/language"
             android:textColor="#FFFFFF"
-            android:backgroundTint="#5D78FF"
-            android:background="@drawable/rounded_white_button" />
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:shadowColor="#000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="8dp" />
+
+        <!-- Logo giữa màn với glow effect -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <!-- Glow background -->
+            <View
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:background="@drawable/bg_logo_glow"
+                android:alpha="0.3" />
+
+            <ImageView
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:src="@drawable/logo"
+                android:contentDescription="@string/app_name" />
+        </FrameLayout>
+
+        <!-- Tiêu đề -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textAlignment="center"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="4dp"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="4"
+            android:fontFamily="sans-serif-light" />
+
+        <!-- Mô tả -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/slogan"
+            android:textAlignment="center"
+            android:textColor="#E8F5E8"
+            android:textSize="16sp"
+            android:layout_marginBottom="32dp"
+            android:alpha="0.9"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- Nút đăng ký / đăng nhập -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <Button
+                    android:id="@+id/btnRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="@string/register"
+                    android:textColor="#2196F3"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:background="@android:color/transparent" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="6dp"
+                app:cardBackgroundColor="#2196F3">
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="@string/login"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:background="@android:color/transparent" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <!-- Dòng chia -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/or"
+            android:textAlignment="center"
+            android:textColor="#E8F5E8"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.8" />
+
+        <!-- Nút Google -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginBottom="24dp">
+
+            <Button
+                android:id="@+id/btnGoogle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/continue_google"
+                android:textColor="#1A1A1A"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:drawableStart="@drawable/ic_google"
+                android:drawablePadding="12dp"
+                android:gravity="center"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:background="@android:color/transparent" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Ảnh minh họa dưới cùng với enhanced styling -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:alpha="0.9">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:src="@drawable/anh_may"
+                android:scaleType="centerCrop"
+                android:contentDescription="Weather illustration" />
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
-
-    <!-- Dòng chia -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/or"
-        android:textAlignment="center"
-        android:textColor="#AAAAAA"
-        android:textSize="12sp"
-        android:layout_marginBottom="16dp" />
-
-    <!-- Nút Google -->
-    <Button
-        android:id="@+id/btnGoogle"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="@string/continue_google"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:drawableStart="@drawable/ic_google"
-        android:drawablePadding="8dp"
-        android:gravity="center"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:background="@drawable/rounded_white_button"
-        android:elevation="2dp" />
-
-    <!-- Ảnh minh họa dưới cùng -->
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/anh_may"
-        android:scaleType="fitCenter"
-        android:layout_marginTop="24dp"
-        android:layout_gravity="center_horizontal" />
-
-</LinearLayout>
+</FrameLayout>

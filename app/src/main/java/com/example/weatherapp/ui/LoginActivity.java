@@ -15,7 +15,6 @@ import com.example.weatherapp.R;
 import com.example.weatherapp.util.LocaleHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class LoginActivity extends BaseActivity {
 
@@ -45,6 +44,9 @@ public class LoginActivity extends BaseActivity {
         imgTogglePassword = findViewById(R.id.imgTogglePassword);
 
         mAuth = FirebaseAuth.getInstance();
+
+        // 🌦️ Initialize weather-based background
+        initializeWeatherBackground();
 
         SharedPreferences pref = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         boolean isRemembered = pref.getBoolean("remember", false);
@@ -78,7 +80,6 @@ public class LoginActivity extends BaseActivity {
                                     editor.putBoolean("remember", true);
                                     editor.putBoolean("isLoggedIn", true);
 
-                                    // Nếu username được set trước đó trong Register thì lưu lại
                                     if (user.getDisplayName() != null) {
                                         editor.putString("username", user.getDisplayName());
                                     }

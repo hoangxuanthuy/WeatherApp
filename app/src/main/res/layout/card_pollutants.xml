@@ -1,188 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardPollutants"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/bg_card"
-    android:layout_marginTop="16dp">
+    android:layout_marginTop="16dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="6dp"
+    app:cardBackgroundColor="#FFFFFF">
 
-    <TextView
-        android:id="@+id/tvPollutantTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Chỉ số chất ô nhiễm"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:layout_marginBottom="12dp" />
-
-    <!-- Grid 2 hàng 3 cột -->
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="3"
-        android:rowCount="2"
-        android:alignmentMode="alignMargins"
-        android:rowOrderPreserved="false"
-        android:useDefaultMargins="true">
+        android:orientation="vertical"
+        android:padding="20dp">
 
-        <!-- PM2.5 -->
+        <!-- Header with icon -->
         <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_row="0"
-            android:layout_column="0">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_molecule"
+                app:tint="#FF5722"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="Biểu tượng chất ô nhiễm" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tvPollutantTitle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="PM2.5"
-                android:textSize="13sp"
-                android:textColor="#000"/>
-            <TextView
-                android:id="@+id/tvPm25"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:textSize="16sp"
+                android:text="Chỉ số chất ô nhiễm"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#444"/>
+                android:textColor="#1A1A1A" />
         </LinearLayout>
 
-        <!-- PM10 -->
-        <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_width="0dp"
+        <!-- Grid 2 hàng 3 cột với improved design -->
+        <GridLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_row="0"
-            android:layout_column="1">
+            android:columnCount="3"
+            android:rowCount="2"
+            android:alignmentMode="alignMargins"
+            android:rowOrderPreserved="false"
+            android:useDefaultMargins="false">
 
-            <TextView
-                android:layout_width="match_parent"
+            <!-- PM2.5 -->
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="PM10"
-                android:textSize="13sp"
-                android:textColor="#000"/>
-            <TextView
-                android:id="@+id/tvPm10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#444"/>
-        </LinearLayout>
+                android:layout_columnWeight="1"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:background="@drawable/bg_pollutant_item"
+                android:padding="12dp"
+                android:layout_margin="4dp">
 
-        <!-- CO -->
-        <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_row="0"
-            android:layout_column="2">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PM2.5"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvPm25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
+            <!-- PM10 -->
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="CO"
-                android:textSize="13sp"
-                android:textColor="#000"/>
-            <TextView
-                android:id="@+id/tvCo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#444"/>
-        </LinearLayout>
+                android:layout_columnWeight="1"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:background="@drawable/bg_pollutant_item"
+                android:padding="12dp"
+                android:layout_margin="4dp">
 
-        <!-- NO2 -->
-        <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_row="1"
-            android:layout_column="0">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PM10"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvPm10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
+            <!-- CO -->
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="NO₂"
-                android:textSize="13sp"
-                android:textColor="#000"/>
-            <TextView
-                android:id="@+id/tvNo2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#444"/>
-        </LinearLayout>
+                android:layout_columnWeight="1"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:background="@drawable/bg_pollutant_item"
+                android:padding="12dp"
+                android:layout_margin="4dp">
 
-        <!-- O3 -->
-        <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_row="1"
-            android:layout_column="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CO"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvCo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
+            <!-- NO2 -->
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="O₃"
-                android:textSize="13sp"
-                android:textColor="#000"/>
-            <TextView
-                android:id="@+id/tvO3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#444"/>
-        </LinearLayout>
+                android:layout_columnWeight="1"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:background="@drawable/bg_pollutant_item"
+                android:padding="12dp"
+                android:layout_margin="4dp">
 
-        <!-- SO2 -->
-        <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_row="1"
-            android:layout_column="2">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NO₂"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvNo2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
+            <!-- O3 -->
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="SO₂"
-                android:textSize="13sp"
-                android:textColor="#000"/>
-            <TextView
-                android:id="@+id/tvSo2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#444"/>
-        </LinearLayout>
+                android:layout_columnWeight="1"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:background="@drawable/bg_pollutant_item"
+                android:padding="12dp"
+                android:layout_margin="4dp">
 
-    </GridLayout>
-</LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="O₃"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvO3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- SO2 -->
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:background="@drawable/bg_pollutant_item"
+                android:padding="12dp"
+                android:layout_margin="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SO₂"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvSo2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+        </GridLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

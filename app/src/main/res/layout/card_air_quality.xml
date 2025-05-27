@@ -5,53 +5,99 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
     android:layout_marginBottom="8dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="4dp"
-    android:background="@color/white">
+    app:cardCornerRadius="20dp"
+    app:cardElevation="6dp"
+    app:cardBackgroundColor="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
+        android:padding="20dp"
         android:gravity="center_vertical">
 
-        <!-- AQI level background -->
-        <TextView
-            android:id="@+id/tvAirQuality"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:gravity="center"
-            android:text="72"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:background="@drawable/bg_aqi_yellow"
-            android:layout_marginEnd="16dp" />
+        <!-- AQI Circle with gradient background -->
+        <FrameLayout
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginEnd="20dp">
 
-        <!-- Text info -->
+            <!-- Background circle -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_aqi_circle" />
+
+            <!-- AQI Number -->
+            <TextView
+                android:id="@+id/tvAirQuality"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="72"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:fontFamily="sans-serif-medium" />
+        </FrameLayout>
+
+        <!-- Text info with icon -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
+            <!-- Title with icon -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_leaf"
+                    app:tint="#4CAF50"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="Biểu tượng chất lượng không khí" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chất lượng không khí"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- AQI Level -->
             <TextView
                 android:id="@+id/tvAqiLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/moderate"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textColor="#1A1A1A"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="2dp" />
 
+            <!-- AQI Detail -->
             <TextView
                 android:id="@+id/tvAqiDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="PM2.5"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="#999999"
                 android:textSize="14sp" />
         </LinearLayout>
+
+        <!-- Status indicator -->
+        <View
+            android:layout_width="4dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_aqi_indicator"
+            android:layout_marginStart="12dp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
