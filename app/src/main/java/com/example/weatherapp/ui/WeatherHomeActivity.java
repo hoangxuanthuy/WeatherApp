@@ -1,6 +1,7 @@
 package com.example.weatherapp.ui;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import com.example.weatherapp.util.WeatherManager;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -97,6 +99,23 @@ public class WeatherHomeActivity extends BaseActivity {
                 searchView.setText("");
             }
             return true;
+        });
+        BottomNavigationView nav = findViewById(R.id.bottomNavigationView);
+        nav.setSelectedItemId(R.id.nav_home);
+        nav.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_home) {
+                return true;
+            } else if (itemId == R.id.nav_analysis) {
+                startActivity(new Intent(this, AnalysisActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_settings) {
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            }
+
+            return false;
         });
     }
 
