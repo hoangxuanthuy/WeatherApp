@@ -33,6 +33,8 @@
         <activity android:name=".ui.WeatherHomeActivity" />
         <activity android:name=".ui.SettingsActivity" />
         <activity android:name=".ui.AdvancedSettingsActivity" />
+        <activity android:name=".ui.ChangePasswordActivity" />
+
 
 
     </application>

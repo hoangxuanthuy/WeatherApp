@@ -13,6 +13,8 @@ import com.example.weatherapp.ui.WeatherHomeActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
 
 public class SettingsActivity extends BaseActivity {
 
@@ -60,9 +62,26 @@ public class SettingsActivity extends BaseActivity {
 
         // Đặt lại mật khẩu
         btnResetPassword.setOnClickListener(v -> {
-            if (user != null && user.getEmail() != null) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            if (user == null) {
+                Toast.makeText(this, "Không tìm thấy người dùng!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            boolean isGoogle = false;
+            for (UserInfo profile : user.getProviderData()) {
+                if (GoogleAuthProvider.PROVIDER_ID.equals(profile.getProviderId())) {
+                    isGoogle = true;
+                    break;
+                }
+            }
+
+            if (isGoogle) {
                 mAuth.sendPasswordResetEmail(user.getEmail());
                 showToast(getString(R.string.reset_password_sent));
+            } else {
+                startActivity(new Intent(this, ChangePasswordActivity.class));
             }
         });
 
