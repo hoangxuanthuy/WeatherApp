@@ -9,6 +9,7 @@
     <!-- Splash -->
     <string name="slogansplash">Chào mừng đến với WeatherNow !</string>
     <!-- Login -->
+    <string name="welcomback">Chào mừng trở lại!</string>
     <string name="username">Tên đăng nhập</string>
     <string name="password">Mật khẩu</string>
     <string name="remember_login">Nhớ đăng nhập</string>
@@ -90,5 +91,18 @@
     <string name="category_feedback">Phản hồi</string>
     <string name="send_feedback">Gửi phản hồi</string>
 
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="current_password">Mật khẩu hiện tại</string>
+    <string name="new_password">Mật khẩu mới</string>
+    <string name="confirm_new_password">Xác nhận mật khẩu mới</string>
 
+    <string name="submit">Xác nhận</string>
+
+    <string name="error_short_password">Mật khẩu phải có ít nhất 6 ký tự</string>
+
+    <string name="google_account_change_error">Tài khoản Google không thể đổi mật khẩu trong ứng dụng</string>
+    <string name="change_success">Đổi mật khẩu thành công</string>
+    <string name="change_failed">Lỗi khi đổi mật khẩu</string>
+    <string name="current_password_incorrect">Mật khẩu hiện tại không đúng</string>
+    <string name="user_not_authenticated">Không thể xác thực người dùng!</string>
 </resources>

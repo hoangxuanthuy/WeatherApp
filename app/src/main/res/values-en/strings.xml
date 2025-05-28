@@ -9,6 +9,7 @@
     <!-- Splash -->
     <string name="slogansplash">Welcome to WeatherNow!</string>
     <!-- Login -->
+    <string name="welcomback">Welcome back!</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="remember_login">Remember login</string>
@@ -88,6 +89,19 @@
     <string name="theme">Theme: Light/Dark</string>
     <string name="category_feedback">Feedback</string>
     <string name="send_feedback">Send feedback</string>
+
+    <string name="change_password">Change Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="submit">Submit</string>
+
+    <string name="error_short_password">Password must be at least 6 characters</string>
+    <string name="google_account_change_error">Google account password cannot be changed in the app</string>
+    <string name="change_success">Password changed successfully</string>
+    <string name="change_failed">Failed to change password</string>
+    <string name="current_password_incorrect">Current password is incorrect</string>
+    <string name="user_not_authenticated">Cannot authenticate user!</string>
 
 
 
