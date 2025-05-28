@@ -63,22 +63,31 @@
     <string name="title_humidity">Humidity</string>
     <string name="title_pressure">Pressure</string>
 
+    <string name="location_icon">Location icon</string>
+    <string name="weather_icon">Weather icon</string>
+    <string name="feels_like_icon">Temperature feel icon</string>
+    <string name="humidity_icon">Humidity icon</string>
+    <string name="wind_icon">Wind icon</string>
 
+    <string name="weather_details">Weather Details</string>
+    <string name="weather_map">Weather Map</string>
+    <string name="search_hint">Enter city/province name</string>
+    <string name="air_quality">Air Quality</string>
+    <string name="pm25">PM2.5</string>
+    <string name="pollutant_title">Pollutant Index</string>
 
-    <!-- Cài đặt -->
-    <string name="title_settings">Cài đặt</string>
-    <string name="category_data">Dữ liệu</string>
-    <string name="realtime_weather">Cập nhật thời tiết theo thời gian thực</string>
-    <string name="realtime_desc">Cho phép tự động làm mới thông tin thời tiết theo thời gian thực.</string>
-    <string name="offline_access">Truy cập ngoại tuyến</string>
-    <string name="offline_desc">Cho phép xem dữ liệu đã tải xuống lần cuối mà không cần internet.</string>
+    <string name="country_vietnam">Vietnam</string>
+    <string name="weather_description">Cloudy</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind">Wind</string>
 
-    <string name="category_appearance">Giao diện</string>
-
-    <string name="theme">Chủ đề: Sáng/Tối</string>
-
-    <string name="category_feedback">Phản hồi</string>
-    <string name="send_feedback">Gửi phản hồi</string>
+    <string name="category_data">Data</string>
+    <string name="realtime_weather">Realtime weather update</string>
+    <string name="offline_access">Offline access</string>
+    <string name="category_appearance">Appearance</string>
+    <string name="theme">Theme: Light/Dark</string>
+    <string name="category_feedback">Feedback</string>
+    <string name="send_feedback">Send feedback</string>
 
 
 

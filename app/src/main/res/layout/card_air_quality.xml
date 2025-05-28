@@ -67,7 +67,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chất lượng không khí"
+                    android:text="@string/air_quality"
                     android:textColor="#666666"
                     android:textSize="14sp" />
             </LinearLayout>

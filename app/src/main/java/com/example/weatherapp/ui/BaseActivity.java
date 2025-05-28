@@ -4,14 +4,22 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.weatherapp.R;
 import com.example.weatherapp.util.LocaleHelper;
 import com.example.weatherapp.util.WeatherManager;
-import com.example.weatherapp.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BaseActivity extends AppCompatActivity {
 
     protected WeatherBackgroundManager backgroundManager;
+
+    // ⭐ Quản lý danh sách Activity đang mở
+    private static final List<BaseActivity> activeActivities = new ArrayList<>();
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -21,16 +29,21 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activeActivities.add(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        activeActivities.remove(this);
+        super.onDestroy();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // 🌦️ Update background when activity resumes
         updateWeatherBackground();
     }
 
-    // 🌦️ Method to initialize weather background for any activity
     protected void initializeWeatherBackground() {
         FrameLayout backgroundContainer = findViewById(R.id.backgroundContainer);
         View lightningOverlay = findViewById(R.id.lightningOverlay);
@@ -41,18 +54,22 @@ public class BaseActivity extends AppCompatActivity {
             backgroundManager = new WeatherBackgroundManager(
                     this, backgroundContainer, lightningOverlay, rainContainer, snowContainer
             );
-
-            // Set background based on current weather
             updateWeatherBackground();
         }
     }
 
-    // 🌦️ Update background based on current weather condition
     protected void updateWeatherBackground() {
         if (backgroundManager != null) {
             WeatherManager weatherManager = WeatherManager.getInstance(this);
             WeatherBackgroundManager.WeatherCondition condition = weatherManager.getWeatherConditionEnum();
             backgroundManager.setWeatherBackground(condition);
+        }
+    }
+
+    // ⭐ Gọi để làm mới tất cả các Activity (recreate sau khi đổi ngôn ngữ)
+    public static void recreateAllActivities() {
+        for (BaseActivity activity : new ArrayList<>(activeActivities)) {
+            activity.recreate();
         }
     }
 }

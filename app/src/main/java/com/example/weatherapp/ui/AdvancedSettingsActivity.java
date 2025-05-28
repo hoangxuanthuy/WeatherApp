@@ -24,7 +24,7 @@ public class AdvancedSettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advanced_settings);
 
-        // Toolbar back
+        // Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -41,45 +41,49 @@ public class AdvancedSettingsActivity extends BaseActivity {
         switchOffline.setChecked(prefs.getBoolean("offline", false));
         boolean isDark = prefs.getBoolean("dark_theme", false);
 
-        // Apply theme
-        AppCompatDelegate.setDefaultNightMode(
-                isDark ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
-        );
+        // Áp dụng dark/light theme
 
-        // Sự kiện
+
+        // Sự kiện toggle
         switchRealtime.setOnCheckedChangeListener((buttonView, isChecked) ->
                 prefs.edit().putBoolean("realtime", isChecked).apply());
 
         switchOffline.setOnCheckedChangeListener((buttonView, isChecked) ->
                 prefs.edit().putBoolean("offline", isChecked).apply());
 
+        // Chuyển đổi ngôn ngữ và reload app
         tvLanguage.setOnClickListener(v -> {
             String currentLang = LocaleHelper.getSavedLanguage(this);
             String newLang = currentLang.equals("vi") ? "en" : "vi";
+
             LocaleHelper.setLocale(this, newLang);
-            startActivity(new Intent(this, AdvancedSettingsActivity.class));
-            finish();
+
+            SharedPreferences.Editor editor = getSharedPreferences("settingsPrefs", MODE_PRIVATE).edit();
+            editor.putString("language", newLang);
+            editor.apply();
+
+            // Gọi hàm để tự động cập nhật lại toàn bộ các Activity
+            BaseActivity.recreateAllActivities();
         });
 
+
+        // Toggle theme sáng/tối
         tvTheme.setOnClickListener(v -> {
-            boolean newDark = !prefs.getBoolean("dark_theme", false);
-            prefs.edit().putBoolean("dark_theme", newDark).apply();
-            AppCompatDelegate.setDefaultNightMode(
-                    newDark ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
-            );
+
         });
 
+        // Mở Facebook Feedback
         tvSendFeedback.setOnClickListener(v -> {
             String fbUrl = "https://www.facebook.com/thuy.hoang.704548/";
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(fbUrl)));
         });
     }
 
-    // Xử lý nút back
+    // Xử lý nút back Toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish(); // Quay lại
+            finish(); // back lại
             return true;
         }
         return super.onOptionsItemSelected(item);
