@@ -67,7 +67,7 @@ public class WeatherHomeActivity extends BaseActivity {
     private TextView tvPm25, tvPm10, tvCo, tvNo2, tvO3, tvSo2;
 
     private final String[] CITY_SUGGESTIONS = new String[]{
-            "Hà Nội", "Hồ Chí Minh", "Đà Nẵng", "Cần Thơ", "Hải Phòng", "Huế", "Nha Trang", "Vũng Tàu", "Đà Lạt"
+            "Ha Noi", "Ho Chi Minh", "Da Nang", "Can Tho", "Hai Phong", "Hue", "Nha Trang", "Vung Tau", "Da Lat"
     };
 
     @Override

@@ -32,6 +32,7 @@
         <activity android:name=".ui.RegisterActivity" />
         <activity android:name=".ui.WeatherHomeActivity" />
         <activity android:name=".ui.SettingsActivity" />
+        <activity android:name=".ui.AdvancedSettingsActivity" />
 
 
     </application>

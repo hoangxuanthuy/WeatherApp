@@ -66,10 +66,11 @@ public class SettingsActivity extends BaseActivity {
             }
         });
 
-        // Cài đặt thêm
         btnSettings.setOnClickListener(v -> {
-            showToast(getString(R.string.setting_feature_coming));
+            Intent intent = new Intent(this, AdvancedSettingsActivity.class);
+            startActivity(intent);
         });
+
 
         // Đăng xuất
         btnLogout.setOnClickListener(v -> {
