@@ -146,12 +146,16 @@ public class CurrentWeather {
         public long getSunset() { return sunset; }
     }
 
-    public static class Rain {
-        @SerializedName("1h")
-        private Float oneHour;
+    public class Rain {
+        @SerializedName("3h")
+        private Double threeHour;
 
-        public Float getOneHour() {
-            return oneHour != null ? oneHour : 0f;
+        public Double getThreeHour() {
+            return threeHour;
+        }
+
+        public void setThreeHour(Double threeHour) {
+            this.threeHour = threeHour;
         }
     }
 }

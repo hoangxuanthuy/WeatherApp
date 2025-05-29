@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -39,9 +37,12 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,6 +68,7 @@ public class WeatherHomeActivity extends BaseActivity {
     private TextView tvSunriseTime, tvSunsetTime;
     private TextView tvFeelsLikeValue, tvAirQualityIndex, tvPressureValue;
     private TextView tvPm25, tvPm10, tvCo, tvNo2, tvO3, tvSo2;
+    private TextView tvHeaderFeelsLike, tvHeaderHumidity, tvHeaderWind;
 
     private final String[] CITY_SUGGESTIONS = new String[]{
             "Ha Noi", "Ho Chi Minh", "Da Nang", "Can Tho", "Hai Phong", "Hue", "Nha Trang", "Vung Tau", "Da Lat"
@@ -78,7 +80,6 @@ public class WeatherHomeActivity extends BaseActivity {
         setContentView(R.layout.activity_weather_home);
 
         initViews();
-        // 🌦️ Initialize weather-based background
         initializeWeatherBackground();
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -100,21 +101,20 @@ public class WeatherHomeActivity extends BaseActivity {
             }
             return true;
         });
+
         BottomNavigationView nav = findViewById(R.id.bottomNavigationView);
         nav.setSelectedItemId(R.id.nav_home);
         nav.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-
-            if (itemId == R.id.nav_home) {
-                return true;
-            } else if (itemId == R.id.nav_analysis) {
+            if (itemId == R.id.nav_home) return true;
+            if (itemId == R.id.nav_analysis) {
                 startActivity(new Intent(this, AnalysisActivity.class));
                 return true;
-            } else if (itemId == R.id.nav_settings) {
+            }
+            if (itemId == R.id.nav_settings) {
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             }
-
             return false;
         });
     }
@@ -144,8 +144,12 @@ public class WeatherHomeActivity extends BaseActivity {
         tvSo2 = findViewById(R.id.tvSo2);
         ivWeatherIcon = findViewById(R.id.ivWeatherIcon);
         osmMap = findViewById(R.id.osmMap);
-
         osmMap.setMultiTouchControls(true);
+
+        // Initialize header TextViews
+        tvHeaderFeelsLike = findViewById(R.id.tvHeaderFeelsLike);
+        tvHeaderHumidity = findViewById(R.id.tvHeaderHumidity);
+        tvHeaderWind = findViewById(R.id.tvHeaderWind);
     }
 
     private void checkLocationPermissionAndFetch() {
@@ -195,17 +199,12 @@ public class WeatherHomeActivity extends BaseActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     CurrentWeather data = response.body();
                     updateWeatherUI(data);
-
-                    // 🌦️ Save weather condition globally
                     WeatherManager.getInstance(WeatherHomeActivity.this)
                             .saveWeatherCondition(
                                     data.getWeather().get(0).getMain(),
                                     data.getWeather().get(0).getDescription()
                             );
-
-                    // 🌦️ Update background immediately
                     updateWeatherBackground();
-
                     getForecastData(data.getCoord().getLat(), data.getCoord().getLon());
                     getAirPollutionData(data.getCoord().getLat(), data.getCoord().getLon());
                     updateMap(data.getCoord().getLat(), data.getCoord().getLon(), city);
@@ -223,7 +222,39 @@ public class WeatherHomeActivity extends BaseActivity {
             @Override
             public void onResponse(Call<ForecastResponse> call, Response<ForecastResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    hourlyAdapter = new HourlyAdapter(response.body().getList());
+                    List<ForecastResponse.ForecastItem> futureList = new ArrayList<>();
+
+                    // Lấy giờ hiện tại và làm tròn lên block 3h tiếp theo
+                    Calendar calendar = Calendar.getInstance();
+                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                    int nextBlock = ((hour / 3) + 1) * 3;
+
+                    // ⚠ Nếu nextBlock >= 24 thì reset về 0h ngày hôm sau
+                    if (nextBlock >= 24) {
+                        calendar.add(Calendar.DAY_OF_MONTH, 1);
+                        nextBlock = 0;
+                    }
+
+                    calendar.set(Calendar.HOUR_OF_DAY, nextBlock);
+                    calendar.set(Calendar.MINUTE, 0);
+                    calendar.set(Calendar.SECOND, 0);
+                    calendar.set(Calendar.MILLISECOND, 0);
+
+                    long roundedNow = calendar.getTimeInMillis();
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM HH:mm", Locale.getDefault());
+                    sdf.setTimeZone(TimeZone.getDefault());
+                    Log.d("DEBUG_TIME", "Forecast starts from block: " + sdf.format(calendar.getTime()));
+
+                    for (ForecastResponse.ForecastItem item : response.body().getList()) {
+                        long dt = item.getDt() * 1000L;
+                        if (dt >= roundedNow) {
+                            item.setFormattedDate(sdf.format(new Date(dt)));
+                            futureList.add(item);
+                        }
+                    }
+
+                    hourlyAdapter = new HourlyAdapter(futureList);
                     rvHourly.setAdapter(hourlyAdapter);
                 }
             }
@@ -232,6 +263,10 @@ public class WeatherHomeActivity extends BaseActivity {
             public void onFailure(Call<ForecastResponse> call, Throwable t) {}
         });
     }
+
+
+
+
 
     private void getAirPollutionData(double lat, double lon) {
         WeatherApiService service = ApiClient.getClient().create(WeatherApiService.class);
@@ -258,13 +293,22 @@ public class WeatherHomeActivity extends BaseActivity {
         tvCityName.setText(data.getCityName());
         tvTemperature.setText(String.format(Locale.getDefault(), "%.2f°C", data.getMain().getTemp()));
         tvDescription.setText(data.getWeather().get(0).getDescription());
-        tvFeelsLikeValue.setText(String.format("%.2f°C", data.getMain().getFeelsLike()));
-        tvRainAmount.setText(data.getRain() != null ? data.getRain().getOneHour() + " mm" : "0 mm");
+        tvFeelsLikeValue.setText(String.format(Locale.getDefault(), "%.2f°C", data.getMain().getFeelsLike()));
+        tvHumidityValue.setText(String.format(Locale.getDefault(), "%d%%", data.getMain().getHumidity()));
+        tvWindSpeedValue.setText(String.format(Locale.getDefault(), "%.1f m/s", data.getWind().getSpeed()));
+        tvPressureValue.setText(String.format(Locale.getDefault(), "%d hPa", data.getMain().getPressure()));
+        tvRainAmount.setText(data.getRain() != null ? data.getRain().getThreeHour() + " mm" : "0 mm");
         tvVisibilityDistance.setText(String.format(Locale.getDefault(), "%.1f km", data.getVisibility() / 1000.0));
+
+        // Update header stats
+        tvHeaderFeelsLike.setText(String.format(Locale.getDefault(), "%.2f°C", data.getMain().getFeelsLike()));
+        tvHeaderHumidity.setText(String.format(Locale.getDefault(), "%d%%", data.getMain().getHumidity()));
+        tvHeaderWind.setText(String.format(Locale.getDefault(), "%.1f m/s", data.getWind().getSpeed()));
 
         long sunrise = data.getSys().getSunrise() * 1000L;
         long sunset = data.getSys().getSunset() * 1000L;
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        sdf.setTimeZone(TimeZone.getDefault());
         tvSunriseTime.setText(sdf.format(new Date(sunrise)));
         tvSunsetTime.setText(sdf.format(new Date(sunset)));
 
@@ -275,6 +319,7 @@ public class WeatherHomeActivity extends BaseActivity {
         findViewById(R.id.rootLayout).startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
     }
 
+
     private void updateMap(double lat, double lon, String city) {
         GeoPoint geoPoint = new GeoPoint(lat, lon);
         osmMap.getController().setZoom(10.0);
@@ -284,6 +329,7 @@ public class WeatherHomeActivity extends BaseActivity {
         Marker marker = new Marker(osmMap);
         marker.setPosition(geoPoint);
         marker.setTitle(city);
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         osmMap.getOverlays().add(marker);
         osmMap.invalidate();
     }

@@ -38,11 +38,10 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourlyView
     public void onBindViewHolder(@NonNull HourlyViewHolder holder, int position) {
         ForecastResponse.ForecastItem item = hourlyList.get(position);
 
-        // Format thời gian (vd: "15:00")
         try {
             SimpleDateFormat sdfInput = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
             Date date = sdfInput.parse(item.getDtTxt());
-            SimpleDateFormat sdfOutput = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            SimpleDateFormat sdfOutput = new SimpleDateFormat("dd/MM HH:mm", Locale.getDefault());
             holder.tvHour.setText(sdfOutput.format(date));
         } catch (Exception e) {
             holder.tvHour.setText("N/A");

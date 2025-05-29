@@ -103,7 +103,21 @@
     <string name="current_password_incorrect">Current password is incorrect</string>
     <string name="user_not_authenticated">Cannot authenticate user!</string>
 
+    <string name="select_sensor">Select Sensor</string>
+    <string name="select_component">Select Component</string>
+    <string name="select_time_range">Time Range</string>
+    <string name="select">Select</string>
+    <string name="view_chart">View Chart</string>
 
+    <string name="title_analysis">Analysis</string>
+    <string name="label_component">Component</string>
+    <string name="btn_pick_time">📅 Select time range</string>
+    <string name="btn_view_chart">📊 View chart</string>
+    <string name="no_data">No statistical data available</string>
+
+    <string name="component_temperature">Temperature (°C)</string>
+    <string name="component_rain">Rain volume (mm)</string>
+    <string name="component_humidity">Humidity (%)</string>
 
 
 

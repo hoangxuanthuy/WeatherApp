@@ -38,6 +38,9 @@ public class ForecastResponse {
         @SerializedName("rain")
         private Rain rain;
 
+        // Thêm cho hiển thị đúng định dạng
+        private String formattedDate;
+
         public long getDt() { return dt; }
         public String getDtTxt() { return dtTxt; }
         public Main getMain() { return main; }
@@ -46,6 +49,9 @@ public class ForecastResponse {
         public Clouds getClouds() { return clouds; }
         public float getPop() { return pop; }
         public Rain getRain() { return rain; }
+
+        public String getFormattedDate() { return formattedDate; }
+        public void setFormattedDate(String formattedDate) { this.formattedDate = formattedDate; }
     }
 
     public static class Main {

@@ -105,4 +105,19 @@
     <string name="change_failed">Lỗi khi đổi mật khẩu</string>
     <string name="current_password_incorrect">Mật khẩu hiện tại không đúng</string>
     <string name="user_not_authenticated">Không thể xác thực người dùng!</string>
+
+    <string name="select_sensor">Chọn cảm biến</string>
+    <string name="select_component">Chọn thành phần</string>
+    <string name="select_time_range">Khoảng thời gian</string>
+    <string name="select">Chọn</string>
+    <string name="view_chart">Xem biểu đồ</string>
+
+    <string name="title_analysis">Phân tích</string>
+    <string name="label_component">Thành phần</string>
+    <string name="btn_pick_time">📅 Chọn khoảng thời gian</string>
+    <string name="btn_view_chart">📊 Xem biểu đồ</string>
+    <string name="no_data">Không có dữ liệu thống kê</string>
+    <string name="component_temperature">Nhiệt độ (°C)</string>
+    <string name="component_rain">Lượng mưa (mm)</string>
+    <string name="component_humidity">Độ ẩm (%)</string>
 </resources>

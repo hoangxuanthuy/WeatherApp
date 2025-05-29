@@ -55,4 +55,11 @@ public interface WeatherApiService {
             @Query("lon") double lon,
             @Query("appid") String apiKey
     );
+    @GET("data/2.5/forecast")
+    Call<ForecastResponse> getForecast(
+            @Query("q") String cityName,
+            @Query("appid") String apiKey,
+            @Query("units") String units,
+            @Query("lang") String lang
+    );
 }

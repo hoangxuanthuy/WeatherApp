@@ -161,9 +161,10 @@
                         android:textColor="#999999" />
 
                     <TextView
+                        android:id="@+id/tvHeaderFeelsLike"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="38,15°C"
+                        android:text="--°C"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:textColor="#1A1A1A"
@@ -194,10 +195,12 @@
                         android:textSize="12sp"
                         android:textColor="#999999" />
 
+                    <!-- Humidity -->
                     <TextView
+                        android:id="@+id/tvHeaderHumidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="76%"
+                        android:text="--%"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:textColor="#1A1A1A"
@@ -228,10 +231,12 @@
                         android:textSize="12sp"
                         android:textColor="#999999" />
 
+                    <!-- Wind -->
                     <TextView
+                        android:id="@+id/tvHeaderWind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="5.5 m/s"
+                        android:text="-- m/s"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:textColor="#1A1A1A"
