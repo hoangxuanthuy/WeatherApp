@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
@@ -13,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +33,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
@@ -51,15 +53,14 @@ import retrofit2.Response;
 public class WeatherHomeActivity extends BaseActivity {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
+    private static final int REQUEST_CODE_PICK_LOCATION = 101;
 
     private AutoCompleteTextView searchView;
     private RecyclerView rvHourly;
     private HourlyAdapter hourlyAdapter;
-
     private FusedLocationProviderClient fusedLocationClient;
     private MapView osmMap;
-
-    private ImageView ivWeatherIcon;
+    private ImageView ivWeatherIcon, ivLocation;
     private final String OWM_API_KEY = "b7476a296b924c64969942901e41deb6";
 
     private TextView tvCityName, tvTemperature, tvDescription;
@@ -77,6 +78,7 @@ public class WeatherHomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Configuration.getInstance().load(getApplicationContext(), PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
         setContentView(R.layout.activity_weather_home);
 
         initViews();
@@ -102,6 +104,11 @@ public class WeatherHomeActivity extends BaseActivity {
             return true;
         });
 
+        ivLocation.setOnClickListener(v -> {
+            Intent intent = new Intent(this, LocationPickerActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_PICK_LOCATION);
+        });
+
         BottomNavigationView nav = findViewById(R.id.bottomNavigationView);
         nav.setSelectedItemId(R.id.nav_home);
         nav.setOnItemSelectedListener(item -> {
@@ -119,8 +126,19 @@ public class WeatherHomeActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_PICK_LOCATION && resultCode == RESULT_OK && data != null) {
+            double lat = data.getDoubleExtra("lat", 0);
+            double lon = data.getDoubleExtra("lon", 0);
+            getCityNameFromCoordinates(lat, lon);
+        }
+    }
+
     private void initViews() {
         searchView = findViewById(R.id.searchView);
+        ivLocation = findViewById(R.id.ivLocation);
         rvHourly = findViewById(R.id.rvHourly);
         rvHourly.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
@@ -146,7 +164,6 @@ public class WeatherHomeActivity extends BaseActivity {
         osmMap = findViewById(R.id.osmMap);
         osmMap.setMultiTouchControls(true);
 
-        // Initialize header TextViews
         tvHeaderFeelsLike = findViewById(R.id.tvHeaderFeelsLike);
         tvHeaderHumidity = findViewById(R.id.tvHeaderHumidity);
         tvHeaderWind = findViewById(R.id.tvHeaderWind);
@@ -215,6 +232,7 @@ public class WeatherHomeActivity extends BaseActivity {
             public void onFailure(Call<CurrentWeather> call, Throwable t) {}
         });
     }
+
 
     private void getForecastData(double lat, double lon) {
         WeatherApiService service = ApiClient.getClient().create(WeatherApiService.class);

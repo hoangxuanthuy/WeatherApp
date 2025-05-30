@@ -110,7 +110,7 @@ public class MainActivity extends BaseActivity {
                             editor.putBoolean("isLoggedIn", true);
                             editor.apply();
                         }
-                        startActivity(new Intent(this, SettingsActivity.class));
+                        startActivity(new Intent(this, WeatherHomeActivity.class));
                         finish();
                     } else {
                         Log.e("FIREBASE_AUTH", "signInWithCredential:failure", task.getException());

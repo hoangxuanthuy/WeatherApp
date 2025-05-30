@@ -90,7 +90,7 @@ public class LoginActivity extends BaseActivity {
                                 }
 
                                 showToast(R.string.login_success);
-                                startActivity(new Intent(this, SettingsActivity.class));
+                                startActivity(new Intent(this, WeatherHomeActivity.class));
                                 finish();
                             }
                         } else {
