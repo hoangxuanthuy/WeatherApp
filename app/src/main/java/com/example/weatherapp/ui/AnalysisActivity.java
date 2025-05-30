@@ -19,7 +19,6 @@ import com.example.weatherapp.data.api.WeatherApiService;
 import com.example.weatherapp.data.model.ForecastResponse;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -80,7 +79,6 @@ public class AnalysisActivity extends BaseActivity {
                 getString(R.string.component_humidity)
         );
 
-
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_dropdown_item,
@@ -114,9 +112,7 @@ public class AnalysisActivity extends BaseActivity {
                     DatePickerDialog endPicker = new DatePickerDialog(this,
                             (v, y, m, d) -> {
                                 endDate.set(y, m, d);
-                                Toast.makeText(this, "Khoảng thời gian: " +
-                                        dateFormat.format(startDate.getTime()) + " → " +
-                                        dateFormat.format(endDate.getTime()), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, getString(R.string.selected_time_range, dateFormat.format(startDate.getTime()), dateFormat.format(endDate.getTime())), Toast.LENGTH_SHORT).show();
                             }, endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.get(Calendar.DAY_OF_MONTH));
                     endPicker.show();
                 }, startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH), startDate.get(Calendar.DAY_OF_MONTH));
@@ -151,18 +147,18 @@ public class AnalysisActivity extends BaseActivity {
         List<String> xLabels = new ArrayList<>();
 
         int index = 0;
-        String selectedComponent = spinnerComponent.getSelectedItem().toString();
+        int selectedIndex = spinnerComponent.getSelectedItemPosition();
 
         for (ForecastResponse.ForecastItem item : forecast.getList()) {
             Date dt = new Date(item.getDt() * 1000L);
             if (dt.after(startDate.getTime()) && dt.before(endDate.getTime())) {
                 float yValue;
-                switch (selectedComponent) {
-                    case "Lượng mưa (mm)":
+                switch (selectedIndex) {
+                    case 1:
                         yValue = item.getRain() != null && item.getRain().getThreeHour() != null ?
                                 item.getRain().getThreeHour().floatValue() : 0f;
                         break;
-                    case "Độ ẩm (%)":
+                    case 2:
                         yValue = (float) item.getMain().getHumidity();
                         break;
                     default:
@@ -185,8 +181,7 @@ public class AnalysisActivity extends BaseActivity {
             txtEmpty.setVisibility(View.GONE);
         }
 
-        // Line chart setup
-        LineDataSet lineDataSet = new LineDataSet(entries, selectedComponent);
+        LineDataSet lineDataSet = new LineDataSet(entries, spinnerComponent.getSelectedItem().toString());
         lineDataSet.setColor(Color.parseColor("#6200EE"));
         lineDataSet.setValueTextColor(Color.DKGRAY);
         lineDataSet.setLineWidth(2.5f);
@@ -197,7 +192,7 @@ public class AnalysisActivity extends BaseActivity {
 
         LineData lineData = new LineData(lineDataSet);
         chart.setData(lineData);
-        chart.getDescription().setText("Biểu đồ từ " + dateFormat.format(startDate.getTime()) + " đến " + dateFormat.format(endDate.getTime()));
+        chart.getDescription().setText(getString(R.string.chart_range, dateFormat.format(startDate.getTime()), dateFormat.format(endDate.getTime())));
         chart.setExtraOffsets(10f, 10f, 10f, 36f);
         chart.setTouchEnabled(true);
         chart.setPinchZoom(true);
@@ -223,8 +218,7 @@ public class AnalysisActivity extends BaseActivity {
         chart.animateX(800);
         chart.invalidate();
 
-        // Bar chart setup
-        BarDataSet barDataSet = new BarDataSet(barEntries, selectedComponent);
+        BarDataSet barDataSet = new BarDataSet(barEntries, spinnerComponent.getSelectedItem().toString());
         barDataSet.setColor(Color.parseColor("#FF6200EE"));
         barDataSet.setValueTextColor(Color.BLACK);
         barDataSet.setValueTextSize(10f);
@@ -233,7 +227,7 @@ public class AnalysisActivity extends BaseActivity {
         BarData barData = new BarData(barDataSet);
         barData.setBarWidth(0.9f);
         barChart.setData(barData);
-        barChart.getDescription().setText("Biểu đồ từ " + dateFormat.format(startDate.getTime()) + " đến " + dateFormat.format(endDate.getTime()));
+        barChart.getDescription().setText(getString(R.string.chart_range, dateFormat.format(startDate.getTime()), dateFormat.format(endDate.getTime())));
 
         XAxis barXAxis = barChart.getXAxis();
         barXAxis.setValueFormatter(xAxis.getValueFormatter());

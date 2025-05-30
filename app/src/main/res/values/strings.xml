@@ -120,4 +120,10 @@
     <string name="component_temperature">Nhiệt độ (°C)</string>
     <string name="component_rain">Lượng mưa (mm)</string>
     <string name="component_humidity">Độ ẩm (%)</string>
+
+    <string name="chart_range">Biểu đồ từ %1$s đến %2$s</string>
+    <string name="selected_time_range">Khoảng thời gian: %1$s → %2$s</string>
+
+
+
 </resources>

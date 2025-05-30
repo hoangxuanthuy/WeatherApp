@@ -119,6 +119,9 @@
     <string name="component_rain">Rain volume (mm)</string>
     <string name="component_humidity">Humidity (%)</string>
 
+    <string name="chart_range">Chart from %1$s to %2$s</string>
+    <string name="selected_time_range">Time range: %1$s → %2$s</string>
+
 
 
 </resources>
