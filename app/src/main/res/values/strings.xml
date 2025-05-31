@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeatherNow</string>
+    <string name="app_name">2TWEATHER</string>
     <string name="register">Đăng ký</string>
     <string name="login">Đăng nhập</string>
     <string name="or">────────────── HOẶC ──────────────</string>
@@ -7,7 +7,7 @@
     <string name="language">🌐 Tiếng Việt</string>
     <string name="slogan">Cung cấp cho bạn thông tin thời tiết\nnhanh chóng và chính xác nhất</string>
     <!-- Splash -->
-    <string name="slogansplash">Chào mừng đến với WeatherNow !</string>
+    <string name="slogansplash">Chào mừng đến với 2TWEATHER !</string>
     <!-- Login -->
     <string name="welcomback">Chào mừng trở lại!</string>
     <string name="username">Tên đăng nhập</string>

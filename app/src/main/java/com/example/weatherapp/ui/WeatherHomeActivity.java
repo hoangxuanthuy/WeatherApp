@@ -102,7 +102,7 @@ public class WeatherHomeActivity extends BaseActivity {
                 searchView.setText("");
             }
             return true;
-        });
+        });//?LLLL::
 
         ivLocation.setOnClickListener(v -> {
             Intent intent = new Intent(this, LocationPickerActivity.class);

@@ -30,6 +30,9 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        // ⭐ THÊM DÒNG NÀY để khởi tạo weather background
+        initializeWeatherBackground();
+
         // Ánh xạ view
         tvGreeting = findViewById(R.id.tvGreeting);
         tvUsername = findViewById(R.id.tvUsername);
@@ -89,7 +92,6 @@ public class SettingsActivity extends BaseActivity {
             Intent intent = new Intent(this, AdvancedSettingsActivity.class);
             startActivity(intent);
         });
-
 
         // Đăng xuất
         btnLogout.setOnClickListener(v -> {

@@ -58,6 +58,9 @@ public class AnalysisActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analysis);
 
+        // ⭐ THÊM DÒNG NÀY để khởi tạo weather background
+        initializeWeatherBackground();
+
         spinnerComponent = findViewById(R.id.spinnerComponent);
         btnPickTime = findViewById(R.id.btnPickTime);
         btnViewChart = findViewById(R.id.btnViewChart);

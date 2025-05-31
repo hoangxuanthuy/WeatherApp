@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeatherNow</string>
+    <string name="app_name">2TWEATHER</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="or">────────────── OR ──────────────</string>
@@ -7,7 +7,7 @@
     <string name="language">🌐 English</string>
     <string name="slogan">Get weather info fast &amp; accurately</string>
     <!-- Splash -->
-    <string name="slogansplash">Welcome to WeatherNow!</string>
+    <string name="slogansplash">Welcome to 2TWEATHER!</string>
     <!-- Login -->
     <string name="welcomback">Welcome back!</string>
     <string name="username">Username</string>

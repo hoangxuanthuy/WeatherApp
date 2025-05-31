@@ -38,6 +38,9 @@ public class RegisterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        // ⭐ THÊM DÒNG NÀY để khởi tạo weather background
+        initializeWeatherBackground();
+
         edtUsername = findViewById(R.id.edtUsername);
         edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);

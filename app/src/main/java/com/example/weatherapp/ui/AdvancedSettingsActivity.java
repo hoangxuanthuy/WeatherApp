@@ -24,6 +24,9 @@ public class AdvancedSettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advanced_settings);
 
+        // ⭐  khởi tạo weather background
+        initializeWeatherBackground();
+
         // Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
